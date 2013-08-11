@@ -12,6 +12,9 @@ import org.lwjgl.opengl.Display;
 
 public class ActivityGame implements Activity{
 	
+	private boolean isGameRunning = false;
+	private boolean hasGameStarted = false;
+	
 	private static ArrayList<GameObject> GameObjects;
 	
 	private static GOPlayer player;
@@ -29,32 +32,37 @@ public class ActivityGame implements Activity{
 		
 	}
 	
+	@Override
 	public void processInput(){
 		if(!Keyboard.isCreated()){	try{Keyboard.create();} catch (LWJGLException e) {e.printStackTrace();}	}
 		
 		while(Keyboard.next()){
-			if(Keyboard.getEventKey() == Keyboard.KEY_ESCAPE){
-				Display.destroy();
-				System.exit(0);
+			if(Keyboard.getEventKey() == Keyboard.KEY_ESCAPE && isGameRunning){
+				setGamePaused(true);
+			}
+			if(Keyboard.getEventKey() == Keyboard.KEY_ESCAPE && !isGameRunning && hasGameStarted){
+				setGamePaused(false);
 			}
 			if(Keyboard.getEventKey() == Keyboard.KEY_SPACE){
-				ball.setFreezed(false);
+				startGame();
 			}
 		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
+		if(Keyboard.isKeyDown(Keyboard.KEY_LEFT) && isGameRunning){
 			player.move(-1);
 		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
+		if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT) && isGameRunning){
 			player.move(1);
 		}
 	}
 	
+	@Override
 	public void update(){
 		for(GameObject object : GameObjects){
 			object.update();
 		}
 	}
 	
+	@Override
 	public void render(){
 		glClear(GL_COLOR_BUFFER_BIT);
 		glLoadIdentity();
@@ -64,13 +72,24 @@ public class ActivityGame implements Activity{
 		Display.update();
 	}
 	
+	@Override
+	public void cleanUp() {
+		// TODO Make all the variables go back to their initialization values.
+		
+	}
+	
+	private void startGame(){
+		hasGameStarted = true;
+		isGameRunning = true;
+	}
+	
+	private void setGamePaused(boolean paused){
+		
+	}
+	
 	public static GameObject GetGameObjectByID(int ObjectID){
 		return GameObjects.get(ObjectID);
 	}
 
-	@Override
-	public void cleanUp() {
-		// TODO Auto-generated method stub
-		
-	}
+	
 }

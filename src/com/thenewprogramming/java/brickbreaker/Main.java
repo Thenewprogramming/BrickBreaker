@@ -85,6 +85,7 @@ public class Main {
 	}
 	
 	private static void cleanUp(){
+		CurrentActivity.cleanUp();
 		Display.destroy();
 	}
 	
