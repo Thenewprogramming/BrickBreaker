@@ -12,7 +12,7 @@ import org.lwjgl.opengl.Display;
 
 public class ActivityGame implements Activity{
 	
-	private boolean isGameRunning = false;
+	private static boolean isGameRunning = false;
 	private boolean hasGameStarted = false;
 	
 	private static ArrayList<GameObject> GameObjects;
@@ -20,14 +20,11 @@ public class ActivityGame implements Activity{
 	private static GOPlayer player;
 	private static GOBall ball;
 	
+	private static int Points = 0;
+	
+	private int currentLevel = 1;
+	
 	public ActivityGame(){
-		GameObjects = new ArrayList<GameObject>();
-		
-		player = new GOPlayer(Display.getWidth() / 2 - 50, 30, 1);
-		GameObjects.add(player);
-		
-		ball = new GOBall(Display.getWidth() / 2 - 20, 45, 0f, -0.1f, true);
-		GameObjects.add(ball);
 		
 		
 	}
@@ -60,6 +57,7 @@ public class ActivityGame implements Activity{
 		for(GameObject object : GameObjects){
 			object.update();
 		}
+		
 	}
 	
 	@Override
@@ -90,6 +88,30 @@ public class ActivityGame implements Activity{
 	public static GameObject GetGameObjectByID(int ObjectID){
 		return GameObjects.get(ObjectID);
 	}
-
 	
+	public static void givePoints(int howManyPoints){
+		Points += howManyPoints;
+	}
+
+	public static boolean isGamePaused() {
+		return isGameRunning;
+	}
+	
+	public static int getPoints(){
+		return Points;
+	}
+
+	private void loadLevel(int level){
+		GameObjects = new ArrayList<GameObject>();
+		
+		player = new GOPlayer(Display.getWidth() / 2 - 50, 30, 1);
+		GameObjects.add(player);
+		
+		ball = new GOBall(Display.getWidth() / 2 - 20, 45, 0f, -0.1f, true);
+		GameObjects.add(ball);
+		
+		//TODO make a standard for level files and read the correct one here
+		
+		
+	}
 }

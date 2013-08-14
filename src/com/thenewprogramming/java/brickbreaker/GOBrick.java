@@ -10,9 +10,9 @@ public class GOBrick extends GameObject {
 	void update() {
 		if(Physics.DoCollide(this, ActivityGame.GetGameObjectByID(BallID))){
 			if(state == 1){
-				//TODO Make a score system and give points here.
 				state = 0;
 				ShouldBeRendered = false;
+				ActivityGame.givePoints(10);
 			}
 			else if(state == 2){
 				state = 1;

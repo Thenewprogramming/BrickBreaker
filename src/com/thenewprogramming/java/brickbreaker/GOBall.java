@@ -10,10 +10,15 @@ public class GOBall extends GameObject {
 	
 	@Override
 	void update() {
+		if(ActivityGame.isGamePaused() && !isFreezed){
+			isFreezed = true;
+		}
 		if(!isFreezed){
 			posx += velx * SPEED;
 			posy += vely * SPEED;
 		}
+		
+		//TODO make walls as a GameObject.
 	}
 	
 	public GOBall(float posx, float posy, float velx, float vely, boolean isFreezed){
