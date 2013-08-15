@@ -4,6 +4,7 @@ import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glLoadIdentity;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import org.lwjgl.LWJGLException;
@@ -25,7 +26,7 @@ public class ActivityGame implements Activity{
 	private int currentLevel = 1;
 	
 	public ActivityGame(){
-		
+		loadLevel(1);
 		
 	}
 	
@@ -111,6 +112,13 @@ public class ActivityGame implements Activity{
 		GameObjects.add(ball);
 		
 		//TODO make a standard for level files and read the correct one here
+		File levelFile = new File("");
+		
+		String test = "dwda";
+		int numberOfCharsChecked = 0;
+		while(numberOfCharsChecked < test.length()){
+			test.charAt(numberOfCharsChecked);
+		}
 		
 		
 	}
