@@ -12,9 +12,22 @@ import static org.lwjgl.opengl.GL11.glTranslatef;
 import static org.lwjgl.opengl.GL11.glVertex2d;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
+import java.awt.Canvas;
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
+
 import org.lwjgl.opengl.GL11;
 
-public class Draw {
+public class Draw extends Canvas{
+	
+	private static final long serialVersionUID = 1L;
+	private static BufferStrategy bs;
+	
+	
+	public Draw(){
+        createBufferStrategy(3);
+        bs = getBufferStrategy();
+	}
 	
 	public static void rect(float x, float y, float width, float height, float rot){
 		glPushMatrix();
@@ -93,4 +106,12 @@ public class Draw {
 		glColor3f(1, 1, 1);
 	}
 	
+	public static void drawrect(int x, int y, int width, int height){
+		Graphics g = bs.getDrawGraphics();
+        
+		g.fillRect(x, y, width, height);
+		
+		g.dispose();
+        bs.show();
+	}
 }

@@ -13,11 +13,15 @@ public class GOBall extends GameObject {
 		if(ActivityGame.isGamePaused() && !isFreezed){
 			isFreezed = true;
 		}
+		else if(!ActivityGame.isGamePaused() && isFreezed){
+			isFreezed = false;
+		}
+		
 		if(!isFreezed){
 			posx += velx * SPEED;
 			posy += vely * SPEED;
 		}
-		
+				
 		//TODO make walls as a GameObject.
 	}
 	
@@ -49,9 +53,7 @@ public class GOBall extends GameObject {
 	}
 	
 	public void InvertVelocityY(){
-		System.out.println(vely);
 		vely = vely - vely - vely;
-		System.out.println(vely);
 	}
 
 }

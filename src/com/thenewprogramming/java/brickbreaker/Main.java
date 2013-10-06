@@ -12,6 +12,7 @@ import static org.lwjgl.opengl.GL11.glOrtho;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.opengl.GL11;
 
 public class Main {
 	
@@ -38,7 +39,7 @@ public class Main {
 		try {
 			Display.setDisplayMode(new DisplayMode(600, 600));
 			Display.create();
-			//Display.setTitle("Moving Squares");
+			Display.setTitle("Brick Breaker");
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 			System.exit(0);
@@ -53,10 +54,11 @@ public class Main {
 		glMatrixMode(GL_MODELVIEW);
 		glClearColor(0,0,0,1);
 		glDisable(GL_DEPTH_TEST);
+		
 	}
 	
 	private static void initActivities(){		
-		CurrentActivity = new ActivityMenu();
+		CurrentActivity = new ActivityGame();
 	}
 	
 	private static void processInput(){

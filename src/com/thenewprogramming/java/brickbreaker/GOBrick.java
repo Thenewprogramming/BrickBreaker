@@ -8,7 +8,7 @@ public class GOBrick extends GameObject {
 	
 	@Override
 	void update() {
-		if(Physics.DoCollide(this, ActivityGame.GetGameObjectByID(BallID))){
+		if(Physics.doCollide(this, ActivityGame.GetGameObjectByID(BallID))){
 			if(state == 1){
 				state = 0;
 				ShouldBeRendered = false;
@@ -26,8 +26,8 @@ public class GOBrick extends GameObject {
 	}
 	
 	public GOBrick(float posx, float posy, int state, int BallID){
-		this.width = 20;
-		this.height = 10;
+		this.width = 65;
+		this.height = 20;
 		this.shape = SHAPE_RECTANGLE;
 		this.state = state;
 		if(state == 1){

@@ -19,7 +19,7 @@ public class GOPlayer extends GameObject{
 	}
 	@Override
 	void update() {
-		if(Physics.DoCollide(this, ActivityGame.GetGameObjectByID(BallID))){
+		if(Physics.doCollide(this, ActivityGame.GetGameObjectByID(BallID))){
 			((GOBall) ActivityGame.GetGameObjectByID(BallID)).InvertVelocityY();
 		}
 	}
