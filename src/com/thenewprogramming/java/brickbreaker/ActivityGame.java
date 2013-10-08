@@ -1,25 +1,16 @@
 package com.thenewprogramming.java.brickbreaker;
 
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.glClear;
-import static org.lwjgl.opengl.GL11.glLoadIdentity;
-import static org.lwjgl.opengl.GL11.glPopMatrix;
-import static org.lwjgl.opengl.GL11.glPushMatrix;
-
+import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import org.lwjgl.LWJGLException;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.GL11;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
-import org.newdawn.slick.util.ResourceLoader;
+import javax.swing.JFrame;
 
+
+
+@SuppressWarnings("unused")
 public class ActivityGame implements Activity{
 	
 	private static boolean isGameRunning = false;
@@ -31,40 +22,40 @@ public class ActivityGame implements Activity{
 	private static GOBall ball;
 	
 	private static int Points = 0;
-	
+
 	private int currentLevel = 1;
 	
-	private Texture texture;
+	private ArrayList<KeyEvent> UnprocessedKeyEvents;
 	
-	public ActivityGame(){
+	private float WindowWidth;
+	private float WindowHeight;
+	
+		
+	public ActivityGame(float windowWidth, float windowHeight){
 		loadLevel(1);
-		try {
-			texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("res/Ball.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
+		WindowWidth = windowWidth;
+		WindowHeight = windowHeight;
+	}
+	@Override
+	public void keyPressed(KeyEvent e) {
+		UnprocessedKeyEvents.add(e);
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
 	}
 	
 	@Override
 	public void processInput(){
-		if(!Keyboard.isCreated()){	try{Keyboard.create();} catch (LWJGLException e) {e.printStackTrace();}	}
+		int keyeventsToProcess = UnprocessedKeyEvents.size();
 		
-		while(Keyboard.next()){
-			if(Keyboard.getEventKey() == Keyboard.KEY_ESCAPE && isGameRunning && hasGameStarted){
-				setGamePaused(true);
-			}
-			if(Keyboard.getEventKey() == Keyboard.KEY_ESCAPE && !isGameRunning && hasGameStarted){
-				setGamePaused(false);
-			}
-			if(Keyboard.getEventKey() == Keyboard.KEY_SPACE && Keyboard.getEventKeyState() == true && !hasGameStarted){
-				startGame();
-			}
-		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_LEFT) && isGameRunning){
-			player.move(-1);
-		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT) && isGameRunning){
-			player.move(1);
+		for(int i = 0; i < keyeventsToProcess; i++){
+			//TODO Process the key event RIGHT MIA!   MIA!
 		}
 	}
 	
@@ -81,34 +72,10 @@ public class ActivityGame implements Activity{
 	public void render(){
 		
 		
-		
-		
-		
-		glClear(GL_COLOR_BUFFER_BIT);
-		glLoadIdentity();
-		
-		
-		glPushMatrix();
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
-		texture.bind(); // or GL11.glBind(texture.getTextureID());
-		GL11.glBegin(GL11.GL_QUADS);
-			GL11.glTexCoord2f(0,0);
-			GL11.glVertex2f(100,100);
-			GL11.glTexCoord2f(1,0);
-			GL11.glVertex2f(100+texture.getTextureWidth(),100);
-			GL11.glTexCoord2f(1,1);
-			GL11.glVertex2f(100+texture.getTextureWidth(),100+texture.getTextureHeight());
-			GL11.glTexCoord2f(0,1);
-			GL11.glVertex2f(100,100+texture.getTextureHeight());
-		GL11.glEnd();
-		GL11.glDisable(GL11.GL_TEXTURE_2D);
-		glPopMatrix();
-		
-		
 		for(GameObject object : GameObjects){
 			object.render();
 		}
-		Display.update();
+
 	}
 	
 	@Override
@@ -155,10 +122,10 @@ public class ActivityGame implements Activity{
 	private void loadLevel(int level){
 		GameObjects = new ArrayList<GameObject>();
 		
-		player = new GOPlayer(Display.getWidth() / 2 - 50, 30, 1);
+		player = new GOPlayer(WindowWidth / 2 - 50, 30, 1);
 		GameObjects.add(player);
 		
-		ball = new GOBall(Display.getWidth() / 2 - 20, 45, 0f, -0.1f, true);
+		ball = new GOBall(WindowWidth / 2 - 20, 45, 0f, -0.1f, true);
 		GameObjects.add(ball);
 		
 		//TODO make a standard for level files and read the correct one here
@@ -213,4 +180,7 @@ public class ActivityGame implements Activity{
 			e.printStackTrace();
 		}
 	}
+
+	
+	
 }

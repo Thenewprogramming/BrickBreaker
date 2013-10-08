@@ -1,18 +1,8 @@
 package com.thenewprogramming.java.brickbreaker;
 
-import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
-import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
-import static org.lwjgl.opengl.GL11.GL_PROJECTION;
-import static org.lwjgl.opengl.GL11.glClearColor;
-import static org.lwjgl.opengl.GL11.glDisable;
-import static org.lwjgl.opengl.GL11.glLoadIdentity;
-import static org.lwjgl.opengl.GL11.glMatrixMode;
-import static org.lwjgl.opengl.GL11.glOrtho;
+import javax.swing.JFrame;
 
-import org.lwjgl.LWJGLException;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
-import org.lwjgl.opengl.GL11;
+
 
 public class Main {
 	
@@ -25,40 +15,29 @@ public class Main {
 	
 	private static boolean closeProgram = false;
 	
+	private static JFrame Window;
+	
 	public static void main(String[] args) {
 		initDisplay();
-		initGL();
 		
 		initActivities();
 		
 		gameLoop();
-		//cleanUp();
+		
+		cleanUp();
 	}
 	
 	private static void initDisplay(){
-		try {
-			Display.setDisplayMode(new DisplayMode(600, 600));
-			Display.create();
-			Display.setTitle("Brick Breaker");
-		} catch (LWJGLException e) {
-			e.printStackTrace();
-			System.exit(0);
-		}
+		Window = new JFrame("Brick Breaker BABY!");
+		
+		Window.setSize(600, 600);
+		Window.setVisible(true);
 	}
 	
-	private static void initGL(){
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		glOrtho(0, Display.getWidth(), 0, Display.getHeight(), -1, 1);
-		
-		glMatrixMode(GL_MODELVIEW);
-		glClearColor(0,0,0,1);
-		glDisable(GL_DEPTH_TEST);
-		
-	}
 	
 	private static void initActivities(){		
-		CurrentActivity = new ActivityGame();
+		CurrentActivity = new ActivityGame(Window.getWidth(), Window.getWidth());
+		Window.addKeyListener(CurrentActivity);
 	}
 	
 	private static void processInput(){
@@ -71,24 +50,23 @@ public class Main {
 	
 	private static void render(){
 		CurrentActivity.render();
-		Display.sync(60);
 	}
 	
 	private static void gameLoop(){
-		while(!closeProgram && !Display.isCloseRequested()){
+		while(!closeProgram){
 			processInput();
 			
 			update();
 			
 			render();
 		}
-		cleanUp();
+		
 		
 	}
 	
 	private static void cleanUp(){
 		CurrentActivity.cleanUp();
-		Display.destroy();
+		System.exit(0);
 	}
 	
 	public static void closeProgram(){
@@ -102,7 +80,7 @@ public class Main {
 			case ACTIVITY_MENU:
 				CurrentActivity = new ActivityMenu();
 			case ACTIVITY_GAME:
-				CurrentActivity = new ActivityGame();
+				CurrentActivity = new ActivityGame(Window.getWidth(), Window.getWidth());
 			case ACTIVITY_HIGHSCORES:
 				CurrentActivity = new ActivityHighscores();
 			case ACTIVITY_ABOUT:

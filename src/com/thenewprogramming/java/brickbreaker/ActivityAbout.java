@@ -1,7 +1,21 @@
 package com.thenewprogramming.java.brickbreaker;
 
+import java.awt.event.KeyEvent;
+
 public class ActivityAbout implements Activity{
 
+	@Override
+	public void keyPressed(KeyEvent e) {
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+	}
+	
 	@Override
 	public void processInput() {
 		
@@ -25,5 +39,7 @@ public class ActivityAbout implements Activity{
 		
 		
 	}
+
+	
 
 }
