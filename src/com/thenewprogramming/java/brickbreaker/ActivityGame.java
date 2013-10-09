@@ -52,11 +52,29 @@ public class ActivityGame implements Activity{
 	
 	@Override
 	public void processInput(){
-		int keyeventsToProcess = UnprocessedKeyEvents.size();
+		int howmanykeyevents = UnprocessedKeyEvents.size();
 		
-		for(int i = 0; i < keyeventsToProcess; i++){
+		for(int i = 0; i < howmanykeyevents; i++){
 			//TODO Process the key event RIGHT MIA!   MIA!
+			KeyEvent e = UnprocessedKeyEvents.get(i);
+			if(e.getKeyCode() == KeyEvent.VK_W){
+				//GO FORWARD
+			}
+			else if(e.getKeyCode() == KeyEvent.VK_S){
+				//GO BACK
+			}
+			else if(e.getKeyCode() == KeyEvent.VK_A){
+				//GO LEFT
+			}
+			else if(e.getKeyCode() == KeyEvent.VK_D){
+				//GO RIGHT
+			}
+			else{
+				
+			}
 		}
+		
+		UnprocessedKeyEvents.subList(0, howmanykeyevents-1).clear();
 	}
 	
 	@Override
