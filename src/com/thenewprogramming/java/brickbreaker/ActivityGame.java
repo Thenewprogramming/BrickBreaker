@@ -2,11 +2,8 @@ package com.thenewprogramming.java.brickbreaker;
 
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-
-import javax.swing.JFrame;
 
 
 
@@ -32,6 +29,8 @@ public class ActivityGame implements Activity{
 	
 		
 	public ActivityGame(float windowWidth, float windowHeight){
+		UnprocessedKeyEvents = new ArrayList<KeyEvent>();
+		
 		loadLevel(1);
 		
 		WindowWidth = windowWidth;
@@ -39,7 +38,26 @@ public class ActivityGame implements Activity{
 	}
 	@Override
 	public void keyPressed(KeyEvent e) {
-		UnprocessedKeyEvents.add(e);
+		//UnprocessedKeyEvents.add(e);
+		
+		if(e.getKeyCode() == KeyEvent.VK_W){
+			//GO FORWARD
+			System.out.println("W pressed!");
+		}
+		if(e.getKeyCode() == KeyEvent.VK_S){
+			//GO BACK
+		}
+		if(e.getKeyCode() == KeyEvent.VK_A){
+			//GO LEFT
+			player.move(-1);
+		}
+		if(e.getKeyCode() == KeyEvent.VK_D){
+			//GO RIGHT
+			player.move(1);
+		}
+		if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
+			Main.closeProgram();
+		}
 	}
 
 	@Override
@@ -52,29 +70,7 @@ public class ActivityGame implements Activity{
 	
 	@Override
 	public void processInput(){
-		int howmanykeyevents = UnprocessedKeyEvents.size();
-		
-		for(int i = 0; i < howmanykeyevents; i++){
-			//TODO Process the key event RIGHT MIA!   MIA!
-			KeyEvent e = UnprocessedKeyEvents.get(i);
-			if(e.getKeyCode() == KeyEvent.VK_W){
-				//GO FORWARD
-			}
-			else if(e.getKeyCode() == KeyEvent.VK_S){
-				//GO BACK
-			}
-			else if(e.getKeyCode() == KeyEvent.VK_A){
-				//GO LEFT
-			}
-			else if(e.getKeyCode() == KeyEvent.VK_D){
-				//GO RIGHT
-			}
-			else{
-				
-			}
-		}
-		
-		UnprocessedKeyEvents.subList(0, howmanykeyevents-1).clear();
+		//Not used at the moment....
 	}
 	
 	@Override

@@ -31,6 +31,7 @@ public class Main {
 		Window = new JFrame("Brick Breaker BABY!");
 		
 		Window.setSize(600, 600);
+		Window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Window.setVisible(true);
 	}
 	
