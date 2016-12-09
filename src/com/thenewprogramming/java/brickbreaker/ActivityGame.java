@@ -43,6 +43,7 @@ public class ActivityGame implements Activity{
 		if(e.getKeyCode() == KeyEvent.VK_W){
 			//GO FORWARD
 			System.out.println("W pressed!");
+			System.out.println("number of game objects: " + GameObjects.size());
 		}
 		if(e.getKeyCode() == KeyEvent.VK_S){
 			//GO BACK
@@ -88,6 +89,7 @@ public class ActivityGame implements Activity{
 		
 		for(GameObject object : GameObjects){
 			object.render();
+			
 		}
 
 	}
@@ -151,12 +153,12 @@ public class ActivityGame implements Activity{
 			String currentLine;
 			while((currentLine = levelReader.readLine()) != null){
 				int numberOfCharsChecked = 0;
-				int firstBorder = 100;
-				int secondBorder = 100;
+				int firstBorder = -1;
+				int secondBorder = -1;
 				
 				while(numberOfCharsChecked < currentLine.length()){
-					if(currentLine.charAt(numberOfCharsChecked) == ';' && secondBorder == 100){
-						if(firstBorder == 100){
+					if(currentLine.charAt(numberOfCharsChecked) == ';' && secondBorder == -1){
+						if(firstBorder == -1){
 							firstBorder = numberOfCharsChecked;
 						}
 						else{
@@ -166,25 +168,20 @@ public class ActivityGame implements Activity{
 					numberOfCharsChecked++;
 				}
 				
-				if(firstBorder != 100 && secondBorder != 100){
+				if(firstBorder != -1 && secondBorder != -1){
 					String firstPart = currentLine.substring(0, firstBorder);
 					String secondPart = currentLine.substring(firstBorder+1, secondBorder);
 					String thirdPart = currentLine.substring(secondBorder+1, currentLine.length());
-					System.out.println(secondBorder);
+					System.out.println("Printing 'secondBorder', whatever that is: " + secondBorder);
 					
 					GOBrick tempBrick = new GOBrick(Float.parseFloat(firstPart), Float.parseFloat(secondPart), Integer.parseInt(thirdPart), 1);
 					GameObjects.add(tempBrick);
 					
 				}
 				else{
-					//TODO when the screen is setup make the error message appear on the screen instead of in the console
+					//TODO when the screen is set up make the error message appear on the screen instead of in the console
 					System.out.println("Error when reading level data at level: " + level + ". Syntax not correct.");
 				}
-				
-				numberOfCharsChecked = 0;
-				firstBorder = 100;
-				secondBorder = 100;
-				
 			}
 			
 			
